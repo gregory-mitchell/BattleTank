@@ -4,6 +4,7 @@
 
 #include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
+#include "Tank.h"
 
 ATank* ATankAIController::GetControlledTank() const
 {
@@ -27,5 +28,15 @@ void ATankAIController::BeginPlay()
 	}
 	else {
 		UE_LOG(LogTemp, Warning, TEXT("Player %s"), *PlayerTank->GetName());
+	}
+}
+
+void ATankAIController::Tick(float DeltaTime)
+{
+	auto PlayerTank = GetPlayerTank();
+	if (PlayerTank)
+	{
+		FVector PlayerLocation = PlayerTank->GetActorLocation();
+		GetControlledTank()->AimAt(PlayerLocation);
 	}
 }

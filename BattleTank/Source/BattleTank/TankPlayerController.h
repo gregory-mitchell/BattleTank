@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "Tank.h"
+class ATank;
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
@@ -19,11 +19,23 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 public:
 	ATank* GetControlledTank() const;
 
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
 private:
 	void AimTowardCrosshair();
+	bool GetSightRayHitLocation(FVector& HitLocation) const;
+	bool GetAimDirection(FVector& AimDirection) const;
+	bool GetAimDirectionHitLocation(FVector AimDirection, FVector& HitLocation) const;
 
+	UPROPERTY(EditAnywhere)
+	float CrosshairXLocation = 0.5;
+
+	UPROPERTY(EditAnywhere)
+	float CrosshairYLocation = 0.33333;
+
+	UPROPERTY(EditAnywhere)
+	float LineTraceRange = 10 * 1000 * 100; // 10km
 };
